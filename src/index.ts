@@ -1,6 +1,6 @@
 import type { ValidationRule } from "graphql";
 import { createDepthLimitRule } from "graphql-safe-depth";
-import { createComplexityLimitRule } from "graphql-safe-complexity";
+import { createComplexityLimitRule } from "graphql-complexity-validation";
 import { GraphQLSafeGuardsOptions } from "./types";
 
 export function graphqlSafeGuards(

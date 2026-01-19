@@ -10,8 +10,9 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "graphql-safe-depth": "^1.0.0",
-    "graphql-safe-complexity": "^1.0.0"
+    "-": "^0.0.1",
+    "graphql-complexity-validation": "^1.0.4",
+    "graphql-safe-depth": "^1.0.0"
   },
   "peerDependencies": {
     "graphql": "^14 || ^15 || ^16"
@@ -29,6 +30,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mateodiaz401/graphql-safe-guards"
+    "url": "https://github.com/Mateodiaz401/graphql-safe-guards.git"
+  },
+  "homepage": "https://github.com/Mateodiaz401/graphql-safe-guards",
+  "bugs": {
+    "url": "https://github.com/Mateodiaz401/graphql-safe-guards/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.9",
+    "vitest": "^4.0.17"
   }
 }
