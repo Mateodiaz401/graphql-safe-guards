@@ -1,0 +1,11 @@
+src/
+tests/
+coverage/
+.vscode/
+.idea/
+.env*
+tsconfig.json
+vitest.config.ts
+.git/
+.github/
+npm-debug.log*
