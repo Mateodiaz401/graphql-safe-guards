@@ -1,3 +1,9 @@
+![CI](https://github.com/Mateodiaz401/graphql-safe-guards/actions/workflows/ci.yml/badge.svg)
+![npm](https://img.shields.io/npm/v/graphql-safe-guards)
+![downloads](https://img.shields.io/npm/dm/graphql-safe-guards)
+![license](https://img.shields.io/npm/l/graphql-safe-guards)
+![typescript](https://img.shields.io/badge/TypeScript-Ready-blue)
+
 # graphql-safe-guards
 
 Protect your GraphQL API with a single import.
@@ -80,6 +86,17 @@ Most GraphQL servers need **both**, but wiring them together is repetitive.
 for GraphQL query safety.
 
 ---
+
+## 🗺️ Roadmap
+
+### v1.x (current)
+
+- ✅ Combine depth + complexity validation
+- ✅ Presets support (`strict`, `balanced`, `relaxed`)
+- ✅ Backward-compatible API
+- ✅ Integration tests with `graphql-js`
+
+> Roadmap items may change based on feedback and real-world usage.
 
 ## License
 
