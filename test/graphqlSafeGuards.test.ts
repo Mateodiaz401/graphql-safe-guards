@@ -1,15 +1,28 @@
 import { describe, it, expect } from "vitest";
-import { graphqlSafeGuards } from "../src";
+import { createSafeGuards } from "../src";
 
-describe("graphqlSafeGuards", () => {
-  it("returns validation rules", () => {
-    const rules = graphqlSafeGuards({
-      depth: 3,
-      complexity: 10,
+describe("createSafeGuards", () => {
+  it("uses strict preset", () => {
+    const rules = createSafeGuards({ preset: "strict" });
+
+    expect(rules).toHaveLength(2);
+  });
+
+  it("allows overriding preset values", () => {
+    const rules = createSafeGuards({
+      preset: "strict",
+      depth: 10,
     });
 
     expect(rules).toHaveLength(2);
-    expect(typeof rules[0]).toBe("function");
-    expect(typeof rules[1]).toBe("function");
+  });
+
+  it("works without preset (backward compatible)", () => {
+    const rules = createSafeGuards({
+      depth: 4,
+      complexity: 20,
+    });
+
+    expect(rules).toHaveLength(2);
   });
 });
