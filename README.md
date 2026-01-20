@@ -57,6 +57,8 @@ Internally, this package composes:
 - `graphql-safe-depth`
 - `graphql-complexity-validation`
 
+The combination is validated through integration tests using native GraphQL validation.
+
 ---
 
 ## Supported Frameworks
@@ -76,13 +78,6 @@ Most GraphQL servers need **both**, but wiring them together is repetitive.
 
 `graphql-safe-guards` provides a **single, predictable entry point**
 for GraphQL query safety.
-
-## Internally, this package composes:
-
-- `graphql-safe-depth`
-- `graphql-complexity-validation`
-
-The combination is validated through integration tests using native GraphQL validation.
 
 ---
 
