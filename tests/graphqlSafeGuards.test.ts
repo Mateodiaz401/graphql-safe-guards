@@ -1,3 +1,4 @@
+import { buildSchema, parse, validate } from "graphql";
 import { describe, it, expect } from "vitest";
 import { createSafeGuards } from "../src";
 
