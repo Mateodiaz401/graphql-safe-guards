@@ -6,4 +6,5 @@ export interface GraphQLSafeGuardsOptions {
   preset?: SafeGuardPreset;
   depth?: number;
   complexity?: number;
+  ignoreIntrospection?: boolean;
 }

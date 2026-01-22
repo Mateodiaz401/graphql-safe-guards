@@ -3,6 +3,7 @@ import { createDepthLimitRule } from "graphql-safe-depth";
 import { createComplexityLimitRule } from "graphql-complexity-validation";
 import { GraphQLSafeGuardsOptions } from "./types";
 import { SAFE_GUARD_PRESETS } from "./presets";
+import { wrapIgnoreIntrospection } from "./utils/wrapIgnoreIntrospection";
 
 export function createSafeGuards(
   options: GraphQLSafeGuardsOptions = {},
@@ -12,9 +13,22 @@ export function createSafeGuards(
     : undefined;
   const depth = options.depth ?? presetConfig?.depth ?? 5;
   const complexity = options.complexity ?? presetConfig?.complexity ?? 100;
+  const ignoreIntrospection = options.ignoreIntrospection ?? false;
 
-  return [
+  const rules: ValidationRule[] = [
     createDepthLimitRule({ maxDepth: depth }),
     createComplexityLimitRule({ maxComplexity: complexity }),
   ];
+
+  if (!ignoreIntrospection) {
+    return rules;
+  }
+
+  return rules.map((rule) => wrapIgnoreIntrospection(rule));
+
+  // el original
+  // return [
+  //   createDepthLimitRule({ maxDepth: depth }),
+  //   createComplexityLimitRule({ maxComplexity: complexity }),
+  // ];
 }

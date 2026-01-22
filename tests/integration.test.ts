@@ -45,4 +45,34 @@ describe("graphql-safe-guards integration", () => {
 
     expect(errors.length).toBeGreaterThan(0);
   });
+
+  it("allows introspection when ignoreIntrospection is true", () => {
+    const schema = buildSchema(`
+    type Query {
+      hello: String
+    }
+  `);
+
+    const introspectionQuery = `
+    query {
+      __schema {
+        types {
+          name
+        }
+      }
+    }
+  `;
+
+    const errors = validate(
+      schema,
+      parse(introspectionQuery),
+      createSafeGuards({
+        depth: 1,
+        complexity: 1,
+        ignoreIntrospection: true,
+      }),
+    );
+
+    expect(errors.length).toBe(0);
+  });
 });
