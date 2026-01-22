@@ -9,7 +9,7 @@
 Protect your GraphQL API with a single import.
 
 A tiny utility that **combines depth limiting and query complexity validation**
-using native GraphQL validation rules.
+using **native GraphQL validation rules**.
 
 ---
 
@@ -44,6 +44,33 @@ const server = new ApolloServer({
 createSafeGuards({
   depth?: number;       // default: 5
   complexity?: number;  // default: 100
+
+  /**
+   * If true, GraphQL introspection queries are ignored
+   * by depth and complexity validation.
+   *
+   * Useful for GraphQL Playground / Apollo Sandbox.
+   */
+  ignoreIntrospection?: boolean; // default: false
+});
+```
+
+Security Note ⚠️
+
+- This library does not enable or disable GraphQL introspection
+
+- Introspection is controlled by your GraphQL server (e.g. Apollo Server)
+  For private APIs with documentation enabled, the recommended setup is:
+
+```ts
+const server = new ApolloServer({
+  schema,
+  introspection: true,
+  validationRules: createSafeGuards({
+    depth: 3,
+    complexity: 10,
+    ignoreIntrospection: true,
+  }),
 });
 ```
 
@@ -95,6 +122,7 @@ for GraphQL query safety.
 - ✅ Presets support (`strict`, `balanced`, `relaxed`)
 - ✅ Backward-compatible API
 - ✅ Integration tests with `graphql-js`
+- 🔜 Preset for private APIs (privateApi)
 
 > Roadmap items may change based on feedback and real-world usage.
 
