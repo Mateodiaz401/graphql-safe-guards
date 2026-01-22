@@ -4,6 +4,12 @@
   "description": "Opinionated GraphQL security guards (depth + complexity) in one import",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest",
