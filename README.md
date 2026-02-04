@@ -42,8 +42,8 @@ const server = new ApolloServer({
 
 ```ts
 createSafeGuards({
-  depth?: number;       // default: 5
-  complexity?: number;  // default: 100
+  depth?: number;       // default: 3 (strict preset)
+  complexity?: number;  // default: 50 (strict preset)
 
   /**
    * If true, GraphQL introspection queries are ignored
@@ -73,6 +73,22 @@ const server = new ApolloServer({
   }),
 });
 ```
+
+## Presets (Recommended)
+
+graphql-safe-guards includes opinionated, production-ready presets for common use cases.
+
+```ts
+createSafeGuards({ preset: "strict" });
+createSafeGuards({ preset: "balanced" });
+createSafeGuards({ preset: "relaxed" });
+```
+
+| Preset   | Depth | Complexity | Use case                    |
+| -------- | ----- | ---------- | --------------------------- |
+| strict   | 3     | 50         | Public APIs, read-only APIs |
+| balanced | 4     | 100        | Private frontends           |
+| relaxed  | 6     | 200        | Admin / internal tools      |
 
 ---
 
@@ -112,6 +128,14 @@ Most GraphQL servers need **both**, but wiring them together is repetitive.
 `graphql-safe-guards` provides a **single, predictable entry point**
 for GraphQL query safety.
 
+### Environment-based setup
+
+```ts
+createSafeGuards({
+  preset: process.env.NODE_ENV === "production" ? "strict" : "balanced",
+});
+```
+
 ---
 
 ## 🗺️ Roadmap
@@ -122,7 +146,7 @@ for GraphQL query safety.
 - ✅ Presets support (`strict`, `balanced`, `relaxed`)
 - ✅ Backward-compatible API
 - ✅ Integration tests with `graphql-js`
-- 🔜 Preset for private APIs (privateApi)
+- 🔜 Additional presets based on community feedback
 
 > Roadmap items may change based on feedback and real-world usage.
 

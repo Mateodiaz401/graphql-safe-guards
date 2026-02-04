@@ -1,21 +1,24 @@
-import { ValidationRule, ValidationContext, Kind, ASTNode } from "graphql";
+import { ValidationRule, ValidationContext, ASTVisitor } from "graphql";
 
+const INTROSPECTION_FIELDS = new Set(["__schema", "__type"]);
 export function wrapIgnoreIntrospection(rule: ValidationRule): ValidationRule {
   return (context: ValidationContext) => {
-    const visitor = rule(context);
+    const visitor = rule(context) as ASTVisitor | void;
 
     return {
       Field(node) {
-        // Detecta introspection (__schema, __type)
-        if (node.name.value.startsWith("__")) {
-          return false;
+        // Ignora introspection sin romper traversal
+        if (INTROSPECTION_FIELDS.has(node.name.value)) {
+          return null;
         }
 
-        // Delegamos al visitor original si existe
+        // Delegate safely if Field visitor exists
         const fieldVisitor = (visitor as any)?.Field;
         if (typeof fieldVisitor === "function") {
           return fieldVisitor(node);
         }
+
+        return undefined;
       },
     };
   };

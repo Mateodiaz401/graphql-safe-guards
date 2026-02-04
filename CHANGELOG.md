@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+## [1.1.2] – 2026-01-22
+
 ## [1.1.0] – 2026-01-22
 
 ### Added
@@ -19,12 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- Improved README clarity around introspection and validation behavior.
+- `ignoreIntrospection` option to exclude GraphQL introspection queries
+  from depth and complexity validation.
 
 ### Fixed
 
-- Prevented GraphQL introspection queries from being blocked by strict
-  depth or complexity limits when `ignoreIntrospection` is enabled.
+- Ensured GraphQL introspection queries are excluded from depth and
+  complexity validation when `ignoreIntrospection` is enabled.
 
 ---
 

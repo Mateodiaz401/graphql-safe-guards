@@ -10,25 +10,23 @@ export function createSafeGuards(
 ): ValidationRule[] {
   const presetConfig = options.preset
     ? SAFE_GUARD_PRESETS[options.preset]
-    : undefined;
-  const depth = options.depth ?? presetConfig?.depth ?? 5;
-  const complexity = options.complexity ?? presetConfig?.complexity ?? 100;
-  const ignoreIntrospection = options.ignoreIntrospection ?? false;
+    : SAFE_GUARD_PRESETS.strict;
 
-  const rules: ValidationRule[] = [
+  const depth = options.depth ?? presetConfig.depth;
+
+  const complexity = options.complexity ?? presetConfig.complexity;
+
+  const ignoreIntrospection =
+    options.ignoreIntrospection ?? presetConfig.ignoreIntrospection;
+
+  let rules: ValidationRule[] = [
     createDepthLimitRule({ maxDepth: depth }),
     createComplexityLimitRule({ maxComplexity: complexity }),
   ];
 
-  if (!ignoreIntrospection) {
-    return rules;
+  if (ignoreIntrospection) {
+    rules = rules.map((rule) => wrapIgnoreIntrospection(rule));
   }
 
-  return rules.map((rule) => wrapIgnoreIntrospection(rule));
-
-  // el original
-  // return [
-  //   createDepthLimitRule({ maxDepth: depth }),
-  //   createComplexityLimitRule({ maxComplexity: complexity }),
-  // ];
+  return rules;
 }
