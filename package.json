@@ -1,6 +1,6 @@
 {
   "name": "graphql-safe-guards",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Protect GraphQL APIs from deep and expensive queries using depth and complexity limits",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
