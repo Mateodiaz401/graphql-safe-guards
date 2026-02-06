@@ -4,12 +4,58 @@
 ![license](https://img.shields.io/npm/l/graphql-safe-guards)
 ![typescript](https://img.shields.io/badge/TypeScript-Ready-blue)
 
-# graphql-safe-guards
+# graphql-safe-guards 🛡️
 
-Protect your GraphQL API with a single import.
+Protect your GraphQL API from **deep, expensive, and abusive queries**
+by enforcing **query depth** and **query complexity limits before execution**.
 
-A tiny utility that **combines depth limiting and query complexity validation**
-using **native GraphQL validation rules**.
+A tiny, framework-agnostic utility that combines **depth limiting** and
+**query complexity validation** using **native GraphQL validation rules**.
+
+> Designed for production GraphQL APIs, public endpoints, and high-traffic systems.
+
+---
+
+## 🚨 The Problem
+
+GraphQL gives clients a lot of power — sometimes **too much**.
+
+Without safeguards, a single query can:
+
+- Exhaust database connections
+- Cause CPU spikes
+- Trigger accidental or malicious DoS attacks
+- Degrade performance for all users
+
+This is especially dangerous in **public APIs** or **high-traffic applications**.
+
+---
+
+## ✅ The Solution
+
+`graphql-safe-guards` acts as a **logical firewall** for GraphQL queries.
+
+Before **any resolver executes**, it:
+
+- Validates query depth
+- Calculates query complexity
+- Rejects unsafe operations early
+
+No resolvers are executed.  
+No database calls are made.
+
+---
+
+## ✨ Features
+
+- ✅ Limit query depth
+- ✅ Limit query complexity
+- ✅ Blocks abusive or accidental DoS-style queries
+- ✅ Uses native GraphQL validation (AST-based)
+- ✅ No schema directives
+- ✅ No runtime execution cost
+- ✅ Framework-agnostic
+- ✅ Production-ready presets
 
 ---
 
@@ -17,11 +63,13 @@ using **native GraphQL validation rules**.
 
 ```bash
 npm install graphql-safe-guards
+# or
+yarn add graphql-safe-guards
 ```
 
 ---
 
-## Usage (Apollo Server)
+## 🚀 Quick Start (Apollo Server)
 
 ```ts
 import { ApolloServer } from "@apollo/server";
@@ -36,7 +84,31 @@ const server = new ApolloServer({
 });
 ```
 
----
+Any query exceeding the limits will be rejected before execution.
+
+## Presets (Recommended)
+
+graphql-safe-guards includes opinionated, production-ready presets for common use cases.
+
+```ts
+createSafeGuards({ preset: "strict" });
+createSafeGuards({ preset: "balanced" });
+createSafeGuards({ preset: "relaxed" });
+```
+
+| Preset   | Depth | Complexity | Use case                    |
+| -------- | ----- | ---------- | --------------------------- |
+| strict   | 3     | 50         | Public APIs, read-only APIs |
+| balanced | 4     | 100        | Private frontends           |
+| relaxed  | 6     | 200        | Admin / internal tools      |
+
+Environment-based setup
+
+```ts
+createSafeGuards({
+  preset: process.env.NODE_ENV === "production" ? "strict" : "balanced",
+});
+```
 
 ## Configuration
 
@@ -55,7 +127,9 @@ createSafeGuards({
 });
 ```
 
-Security Note ⚠️
+---
+
+## 🔐 Security Note — Introspection⚠️
 
 - This library does not enable or disable GraphQL introspection
 
@@ -74,39 +148,61 @@ const server = new ApolloServer({
 });
 ```
 
-## Presets (Recommended)
+---
 
-graphql-safe-guards includes opinionated, production-ready presets for common use cases.
+### 🔥 What It Protects Against
+
+Deeply nested queries
 
 ```ts
-createSafeGuards({ preset: "strict" });
-createSafeGuards({ preset: "balanced" });
-createSafeGuards({ preset: "relaxed" });
+a {
+  b {
+    c {
+      d {
+        e {
+          f {
+            g
+          }
+        }
+      }
+    }
+  }
+}
 ```
 
-| Preset   | Depth | Complexity | Use case                    |
-| -------- | ----- | ---------- | --------------------------- |
-| strict   | 3     | 50         | Public APIs, read-only APIs |
-| balanced | 4     | 100        | Private frontends           |
-| relaxed  | 6     | 200        | Admin / internal tools      |
+High-cost queries
+
+```ts
+posts(limit: 100) {
+  comments(limit: 100) {
+    author {
+      posts(limit: 100)
+    }
+  }
+}
+```
 
 ---
 
-## What It Does
+## 🧠 How It Works
 
-- Limits query depth
-- Limits query complexity
-- Uses native GraphQL validation
-- No schema directives
-- No runtime execution cost
-- Framework agnostic
+- Parses the GraphQL AST
+- Computes depth and complexity
+- Runs during the validation phase
+- Blocks unsafe queries before execution
 
-Internally, this package composes:
+Fast, predictable, and scalable.
+
+---
+
+## 🧩 Internals
+
+This package composes and unifies:
 
 - `graphql-safe-depth`
 - `graphql-complexity-validation`
 
-The combination is validated through integration tests using native GraphQL validation.
+Validated through integration tests using native graphql-js validation.
 
 ---
 
@@ -120,21 +216,13 @@ The combination is validated through integration tests using native GraphQL vali
 
 ---
 
-## Why this exists
+## 📊 Production Recommendations
 
-Depth limiting and complexity analysis solve **different problems**.
-Most GraphQL servers need **both**, but wiring them together is repetitive.
-
-`graphql-safe-guards` provides a **single, predictable entry point**
-for GraphQL query safety.
-
-### Environment-based setup
-
-```ts
-createSafeGuards({
-  preset: process.env.NODE_ENV === "production" ? "strict" : "balanced",
-});
-```
+- For best results, combine this library with:
+- DataLoader (avoid N+1 queries)
+- Pagination on list fields
+- HTTP caching / CDN
+- Persisted queries (hash-based)
 
 ---
 
@@ -149,6 +237,11 @@ createSafeGuards({
 - 🔜 Additional presets based on community feedback
 
 > Roadmap items may change based on feedback and real-world usage.
+
+## ⭐ Support
+
+If this library helped you secure your GraphQL API,
+please consider giving it a ⭐ on GitHub.
 
 ## License
 

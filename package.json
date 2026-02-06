@@ -1,7 +1,7 @@
 {
   "name": "graphql-safe-guards",
   "version": "1.1.2",
-  "description": "Opinionated GraphQL security guards (depth + complexity) in one import",
+  "description": "Protect GraphQL APIs from deep and expensive queries using depth and complexity limits",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -25,12 +25,18 @@
   },
   "keywords": [
     "graphql",
-    "security",
-    "depth",
-    "complexity",
-    "apollo",
-    "nest",
-    "yoga"
+    "graphql-security",
+    "graphql-validation",
+    "graphql-query",
+    "graphql-depth-limit",
+    "graphql-complexity",
+    "query-complexity",
+    "depth-limit",
+    "dos-protection",
+    "api-security",
+    "apollo-server",
+    "nestjs",
+    "graphql-yoga"
   ],
   "author": "Mateo diaz lopez <mateodiaz401@gmail.com>",
   "license": "MIT",

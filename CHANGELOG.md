@@ -2,14 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
 ## [Unreleased]
 
+- Internal improvements and documentation refinements.
+
+---
+
 ## [1.1.2] – 2026-01-22
+
+### Fixed
+
+- Corrected edge cases where GraphQL introspection queries were still
+  partially evaluated under certain validation paths.
+- Improved consistency when `ignoreIntrospection` is enabled to ensure
+  introspection queries fully bypass depth and complexity validation.
+
+_No breaking changes._
+
+---
 
 ## [1.1.0] – 2026-01-22
 
@@ -17,19 +32,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - `ignoreIntrospection` option to allow GraphQL introspection queries
   without applying depth and complexity validation.
-- Documentation explaining how to use `ignoreIntrospection` with
-  GraphQL Playground and Apollo Sandbox.
-- Security guidelines for private APIs with introspection enabled.
+- Security documentation explaining safe introspection usage for
+  private APIs and development tools (GraphQL Playground, Apollo Sandbox).
 
 ### Changed
 
-- `ignoreIntrospection` option to exclude GraphQL introspection queries
-  from depth and complexity validation.
+- Introspection queries are now explicitly detected and handled
+  during validation rather than relying on implicit field checks.
 
 ### Fixed
 
-- Ensured GraphQL introspection queries are excluded from depth and
-  complexity validation when `ignoreIntrospection` is enabled.
+- Prevented false positives when validating introspection-related fields
+  in schemas with strict depth or complexity limits.
+
+_No breaking changes._
 
 ---
 
@@ -37,9 +53,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Preset-based configuration (`strict`, `balanced`, `relaxed`)
+- Preset-based configuration (`strict`, `balanced`, `relaxed`) for
+  common production use cases.
 - Integration tests validating combined depth and complexity limits
+  using native `graphql-js` validation.
 
 ### Fixed
 
-- Type-safe preset resolution
+- Type-safe preset resolution to ensure predictable configuration behavior.
+
+---
+
+## [1.0.0]
+
+### Added
+
+- Initial release.
+- Unified depth limiting and query complexity validation.
+- Native GraphQL validation rule integration.
+- Framework-agnostic design compatible with `graphql-js` and major servers.
