@@ -16,7 +16,6 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "graphql-complexity-validation": "^1.0.4",
     "graphql-safe-depth": "^1.0.0"
   },
