@@ -17,8 +17,7 @@
   },
   "dependencies": {
     "graphql-complexity-validation": "^1.0.4",
-    "graphql-safe-depth": "^1.0.0",
-    "i": "^0.3.7"
+    "graphql-safe-depth": "^1.0.0"
   },
   "peerDependencies": {
     "graphql": "^14 || ^15 || ^16"
